@@ -1,7 +1,7 @@
 {
     "name": "Habit by derHaken",
     "short_name": "Habit",
-    "start_url": "https://github.com/derHaken/habit.github.io",
+    "start_url": "https://derhaken.github.io/habit.github.io/",
     "display": "standalone",
     "background_color": "#1f1f1f",
     "theme_color": "#000000",
