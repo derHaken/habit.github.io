@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="habitCSS.css">
+    <title>Habit</title>
+    <link rel="manifest" href="/habitJSON.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <style>
+        /* Remove the spinner buttons from number input */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- App Interface -->
+    <div class="app-interface">
+        <div class="page-btn">
+            <button id="mainBtn" class="Main-btn">Main</button>
+            <button id="historyBtn" class="History-btn">History</button>
+            <button id="readBtn" class="Read-btn">Read</button>
+        </div>
+
+        <!-- Main Page -->
+        <div class="main-page">
+            <div class="habitProgram-content">
+                <div class="habitProgram-HTML"></div>
+            </div>
+            <form id="habitData" class="habitInput">
+                <div class="inp-sec center-center">
+                    <input class="time" id="habitHour" type="number" maxlength="2" oninput="handleInput(this, 'habitMin', this)">
+                    <p>:</p> 
+                    <input class="time" id="habitMin" type="number" maxlength="2" oninput="handleInput(this, 'habitName', 'habitHour')">
+                    <input class="habitNameInp" id="habitName" type="text" oninput="handleInput(this, this, 'habitMin')">
+                </div>
+    
+                <div class="inp-btn">
+                    <button type="submit" class="add-btn" id="add">Add</button>
+                    <button type="reset" class="cancel-btn" id="cancel">Cancel</button>
+                </div>
+            </form>
+            <button class="add-habit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0,0,256,256">
+                    <g fill="#505554" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.6907,0 -23,10.3093 -23,23c0,12.69071 10.3093,23 23,23c12.69071,0 23,-10.30929 23,-23c0,-12.6907 -10.30929,-23 -23,-23zM25,4c11.60982,0 21,9.39018 21,21c0,11.60982 -9.39018,21 -21,21c-11.60982,0 -21,-9.39018 -21,-21c0,-11.60982 9.39018,-21 21,-21zM24,13v11h-11v2h11v11h2v-11h11v-2h-11v-11z"></path></g></g>
+                </svg>
+
+                <p>Add a Habit.</p>
+            </button>
+        </div><!-- Main Page -->
+
+        <!-- History Page -->
+        <div class="History-page">
+            <div class="daysSheet"></div>
+            <div class="habitSheets"></div>
+        </div>
+
+        <!-- Read Page -->
+        <div class="Read-page">
+            <div class="popup-box">
+                <div class="popup">
+                  <div class="content">
+                    <header>
+                      <p></p>
+                      <i class="uil uil-times"></i>
+                    </header>
+                    <form action="#">
+                      <div class="row title">
+                        <label>Title</label>
+                        <input type="text" spellcheck="false" style="color: #fff">
+                      </div>
+                      <div class="row description">
+                        <label>Description</label>
+                        <textarea style="color: #fff" spellcheck="false"></textarea>
+                      </div>
+                      <button></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="wrapper">
+                <li class="add-box">
+                    <!-- <div class="icon"><i class="uil uil-plus"></i></div>
+                    <p>Add new note</p> -->
+
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0,0,256,256">
+                     <g fill="#fff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.6907,0 -23,10.3093 -23,23c0,12.69071 10.3093,23 23,23c12.69071,0 23,-10.30929 23,-23c0,-12.6907 -10.30929,-23 -23,-23zM25,4c11.60982,0 21,9.39018 21,21c0,11.60982 -9.39018,21 -21,21c-11.60982,0 -21,-9.39018 -21,-21c0,-11.60982 9.39018,-21 21,-21zM24,13v11h-11v2h11v11h2v-11h11v-2h-11v-11z"></path></g></g>
+                    </svg>
+                    <p>Add new note</p>
+                </li>
+              </div>
+        </div>
+    </div>
+    <!-- App Interface -->
+
+
+    <script src="habitJS.js"></script>
+</body>
+</html>
