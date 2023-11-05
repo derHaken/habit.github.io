@@ -1084,3 +1084,33 @@ addBtn.addEventListener("click", e => {
         closeIcon.click();
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Define the URL of your JSON file
+    var jsonUrl = "https://derhaken.github.io/habit.github.io/habitJSON.json";
+
+    // Use the fetch API to get the JSON data
+    fetch(jsonUrl)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            // Access the "start_url" property from the JSON data
+            var startUrl = data.start_url;
+
+            // Use the start_url as needed
+            console.log("start_url: " + startUrl);
+
+            // You can insert it into your webpage, e.g., as text content of an element
+            var startUrlElement = document.getElementById("start-url-element");
+            if (startUrlElement) {
+                startUrlElement.textContent = startUrl;
+            }
+        })
+        .catch(function (error) {
+            console.error("Error fetching or processing JSON: " + error);
+        });
+});
