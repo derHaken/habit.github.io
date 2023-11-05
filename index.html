@@ -17,21 +17,6 @@
             margin: 0;
         }
     </style>
-        <script>
-        // Load the JSON file using Fetch API
-        fetch('habitJSON.json')
-            .then(response => response.json())
-            .then(data => {
-                // Check if the "startUrl" field exists in the JSON
-                if (data.startUrl) {
-                    // Redirect to the specified URL
-                    window.location.href = data.startUrl;
-                }
-            })
-            .catch(error => {
-                console.error('Error loading JSON file:', error);
-            });
-    </script>
 </head>
 <body>
     <!-- App Interface -->
