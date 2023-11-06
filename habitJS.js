@@ -26,42 +26,92 @@ function daysChecker(){
 
     if(document.querySelector(".habitSheets").querySelectorAll(".sheetBox")) {
 
-        document.querySelector(".habitSheets").querySelectorAll(".sheetBox").forEach(sheetBox => {
+        // document.querySelector(".habitSheets").querySelectorAll(".sheetBox").forEach(sheetBox => {
 
     
-            let boxDate = sheetBox.getAttribute('data-date')
+        //     let boxDate = sheetBox.getAttribute('data-date')
 
-            let parentElement = sheetBox.parentNode;
+        //     let parentElement = sheetBox.parentNode;
 
             
 
-            if((parseInt(boxDate) === currentDate) && (window.getComputedStyle(parentElement).getPropertyValue('display') === 'flex')){
+        //     if((parseInt(boxDate) === currentDate) && (window.getComputedStyle(parentElement).getPropertyValue('display') === 'flex')){
                 
-                status.push(sheetBox.getAttribute('data-statu'))
+        //         status.push(sheetBox.getAttribute('data-statu'))
 
-                console.log(status)
+        //         console.log(status)
             
-                if(status.includes('NotDone') || status.length === 0){
+        //         if(status.includes('NotDone') || status.length === 0){
 
-                    console.log("gri")
+        //             console.log("gri")
 
-                    let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
-                    box.setAttribute('data-statu', 'NotDone')
-                    box.style.backgroundColor = 'rgb(80, 85, 84)'
-                    box.style.boxShadow= 'none'
+        //             let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+        //             box.setAttribute('data-statu', 'NotDone')
+        //             box.style.backgroundColor = 'rgb(80, 85, 84)'
+        //             box.style.boxShadow= 'none'
 
-                }else{
+        //         }else{
 
-                    console.log('yeş')
-                    let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
-                    box.setAttribute('data-statu', 'Done')
-                    box.style.backgroundColor = 'rgb(110, 187, 62)';
-                    box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-                }
-            }
+        //             console.log('yeş')
+        //             let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+        //             box.setAttribute('data-statu', 'Done')
+        //             box.style.backgroundColor = 'rgb(110, 187, 62)';
+        //             box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+        //         }
+        //     }
     
 
+        // })
+
+        let neededCount = 0;
+
+        neededHabits.forEach((neededHabit) => { 
+            neededCount += neededHabit.neededHabit
         })
+
+
+
+        neededHabits.forEach((neededHabit) => {
+
+            let doneCount2 = habitsDone.length - 1;
+
+            if (doneCount2/neededCount === 1) {
+
+                let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+                box.setAttribute('data-statu', 'Done')
+                box.style.backgroundColor = 'rgb(110, 187, 62)';
+                box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+
+            } else if( doneCount2/neededCount < 1 && doneCount2/neededCount >= 2/3  ){
+
+                let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+                box.setAttribute('data-statu', '2/3Done')
+                box.style.backgroundColor = '#26a641'
+                box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+    
+            } else if( doneCount2/neededCount < 2/3 &&  doneCount2/neededCount >= 1/3  ){
+
+                let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+                box.setAttribute('data-statu', '1/3Done')
+                box.style.backgroundColor = '#006d32'
+                box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+      
+            } else if( doneCount2/neededCount < 1/3 && doneCount2/neededCount > 0  ){
+
+                let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+                box.setAttribute('data-statu', '2/3Done')
+                box.style.backgroundColor = '#0e4429'
+                box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+      
+            }else if(doneCount2/neededCount === 0){
+
+                let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+                box.setAttribute('data-statu', 'NotDone')
+                box.style.backgroundColor = 'rgb(80, 85, 84)'
+                box.style.boxShadow= 'none'
+    
+            }
+        });
     }
 }
 
@@ -182,9 +232,15 @@ function swipeChange(){
                 //     }
                 // });
 
-
                 neededHabits.forEach((neededHabit) => {
-                    const doneCount = doneHabitsMap[neededHabit.habitName];
+
+                    let doneCount = parseInt(doneHabitsMap[neededHabit.habitName]) ;
+            
+                    if(!doneCount) {
+                        doneCount = 0;
+                    }
+                    let doneRate = doneCount/neededHabit.neededHabit
+            
                     if (doneCount === neededHabit.neededHabit) {
                       console.log(`${neededHabit.habitName} has the same count: ${doneCount}`);
             
@@ -202,15 +258,77 @@ function swipeChange(){
                             if(div.getAttribute('data-statu') === 'Done') {
                                 div.style.backgroundColor = 'rgb(110, 187, 62)';
                                 div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-        
-                            }else {
-                                div.style.backgroundColor = 'rgb(80, 85, 84)'
-                                div.style.boxShadow= 'none';
             
                             }
                         }
                       )
-                    } else {
+                    } else if( doneRate < 1 && doneRate >= 2/3  ){
+            
+                        console.log(`${neededHabit.habitName} count does 2/3 match.`);
+            
+                        let date = habitsDone[0];
+              
+                        var divElements = document.querySelectorAll('.sheetBox');
+              
+                        divElements.forEach(function(div) {
+                              let dataName = div.getAttribute('data-name');
+                              let dataDate = parseInt(div.getAttribute('data-date'));
+              
+                              if (dataName === neededHabit.habitName && dataDate === date) {
+                                  div.setAttribute('data-statu','2/3Done');  
+                              }
+                              if(div.getAttribute('data-statu') === '2/3Done') {
+                                  console.log('2/3 color 4')
+                                  div.style.backgroundColor = '#26a641';
+                                  div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+            
+                              }  
+                          }
+                        )
+                    } else if( doneRate < 2/3 && doneRate >= 1/3  ){
+            
+                        console.log(`${neededHabit.habitName} count does 1/3 match.`);
+            
+                        let date = habitsDone[0];
+              
+                        var divElements = document.querySelectorAll('.sheetBox');
+              
+                        divElements.forEach(function(div) {
+                              let dataName = div.getAttribute('data-name');
+                              let dataDate = parseInt(div.getAttribute('data-date'));
+              
+                              if (dataName === neededHabit.habitName && dataDate === date) {
+                                  div.setAttribute('data-statu','1/3Done');  
+                              }
+                              if(div.getAttribute('data-statu') === '1/3Done') {
+                                  div.style.backgroundColor = '#006d32';
+                                  div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+                              }  
+                          }
+                        )
+                    } else if( doneRate < 1/3 && doneRate > 0  ){
+            
+                        console.log(`${neededHabit.habitName} count does not match.`);
+            
+                        let date = habitsDone[0];
+              
+                        var divElements = document.querySelectorAll('.sheetBox');
+              
+                        divElements.forEach(function(div) {
+                              let dataName = div.getAttribute('data-name');
+                              let dataDate = parseInt(div.getAttribute('data-date'));
+              
+                              if (dataName === neededHabit.habitName && dataDate === date) {
+                                  div.setAttribute('data-statu','1/3Done');  
+                              }
+                              if(div.getAttribute('data-statu') === '1/3Done') {
+                                  div.style.backgroundColor = '#0e4429';
+                                  div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+            
+                              }  
+                          }
+                        )
+                    }else if(!doneCount){
                       console.log(`${neededHabit.habitName} count does not match.`);
             
                       let date = habitsDone[0];
@@ -223,22 +341,13 @@ function swipeChange(){
             
                             if (dataName === neededHabit.habitName && dataDate === date) {
                                 div.setAttribute('data-statu','NotDone');  
-                            }
-                            if(div.getAttribute('data-statu') === 'Done') {
-                                div.style.backgroundColor = 'rgb(110, 187, 62)';
-                                div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-        
-                            }else {
-                                div.style.backgroundColor = 'rgb(80, 85, 84)'
-                                div.style.boxShadow= 'none';
-                            }
-            
-                            
+                            } 
                         }
                       )
             
                     }
                 });
+            
     
                 habitNames = [],
                 habitProgram.forEach(habit => {
@@ -718,7 +827,14 @@ habitData.addEventListener('submit', function add(e) {
       
     // Iterate through the neededHabits array and compare the counts
     neededHabits.forEach((neededHabit) => {
-        const doneCount = doneHabitsMap[neededHabit.habitName];
+
+        let doneCount = parseInt(doneHabitsMap[neededHabit.habitName]) ;
+
+        if(!doneCount) {
+            doneCount = 0;
+        }
+        let doneRate = doneCount/neededHabit.neededHabit
+
         if (doneCount === neededHabit.neededHabit) {
           console.log(`${neededHabit.habitName} has the same count: ${doneCount}`);
 
@@ -736,14 +852,77 @@ habitData.addEventListener('submit', function add(e) {
                 if(div.getAttribute('data-statu') === 'Done') {
                     div.style.backgroundColor = 'rgb(110, 187, 62)';
                     div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-                }else {
-                    div.style.backgroundColor = 'rgb(80, 85, 84)'
-                    div.style.boxShadow= 'none';
 
                 }
             }
           )
-        } else {
+        } else if( doneRate < 1 && doneRate >= 2/3  ){
+
+            console.log(`${neededHabit.habitName} count does 2/3 match.`);
+
+            let date = habitsDone[0];
+  
+            var divElements = document.querySelectorAll('.sheetBox');
+  
+            divElements.forEach(function(div) {
+                  let dataName = div.getAttribute('data-name');
+                  let dataDate = parseInt(div.getAttribute('data-date'));
+  
+                  if (dataName === neededHabit.habitName && dataDate === date) {
+                      div.setAttribute('data-statu','2/3Done');  
+                  }
+                  if(div.getAttribute('data-statu') === '2/3Done') {
+                      console.log('2/3 color 4')
+                      div.style.backgroundColor = '#26a641';
+                      div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+
+                  }  
+              }
+            )
+        } else if( doneRate < 2/3 && doneRate >= 1/3  ){
+
+            console.log(`${neededHabit.habitName} count does 1/3 match.`);
+
+            let date = habitsDone[0];
+  
+            var divElements = document.querySelectorAll('.sheetBox');
+  
+            divElements.forEach(function(div) {
+                  let dataName = div.getAttribute('data-name');
+                  let dataDate = parseInt(div.getAttribute('data-date'));
+  
+                  if (dataName === neededHabit.habitName && dataDate === date) {
+                      div.setAttribute('data-statu','1/3Done');  
+                  }
+                  if(div.getAttribute('data-statu') === '1/3Done') {
+                      div.style.backgroundColor = '#006d32';
+                      div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+                  }  
+              }
+            )
+        } else if( doneRate < 1/3 && doneRate > 0  ){
+
+            console.log(`${neededHabit.habitName} count does not match.`);
+
+            let date = habitsDone[0];
+  
+            var divElements = document.querySelectorAll('.sheetBox');
+  
+            divElements.forEach(function(div) {
+                  let dataName = div.getAttribute('data-name');
+                  let dataDate = parseInt(div.getAttribute('data-date'));
+  
+                  if (dataName === neededHabit.habitName && dataDate === date) {
+                      div.setAttribute('data-statu','1/3Done');  
+                  }
+                  if(div.getAttribute('data-statu') === '1/3Done') {
+                      div.style.backgroundColor = '#0e4429';
+                      div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+
+                  }  
+              }
+            )
+        }else if(!doneCount){
           console.log(`${neededHabit.habitName} count does not match.`);
 
           let date = habitsDone[0];
@@ -756,17 +935,7 @@ habitData.addEventListener('submit', function add(e) {
 
                 if (dataName === neededHabit.habitName && dataDate === date) {
                     div.setAttribute('data-statu','NotDone');  
-                }
-                if(div.getAttribute('data-statu') === 'Done') {
-                    div.style.backgroundColor = 'rgb(110, 187, 62)';
-                    div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-
-                }else {
-                    div.style.backgroundColor = 'rgb(80, 85, 84)'
-                    div.style.boxShadow= 'none';
-                }
-
-                
+                } 
             }
           )
 
@@ -823,7 +992,14 @@ function checkBtn(button) {
           
         // Iterate through the neededHabits array and compare the counts
         neededHabits.forEach((neededHabit) => {
-            const doneCount = doneHabitsMap[neededHabit.habitName];
+
+            let doneCount = parseInt(doneHabitsMap[neededHabit.habitName]) ;
+    
+            if(!doneCount) {
+                doneCount = 0;
+            }
+            let doneRate = doneCount/neededHabit.neededHabit
+    
             if (doneCount === neededHabit.neededHabit) {
               console.log(`${neededHabit.habitName} has the same count: ${doneCount}`);
     
@@ -841,15 +1017,77 @@ function checkBtn(button) {
                     if(div.getAttribute('data-statu') === 'Done') {
                         div.style.backgroundColor = 'rgb(110, 187, 62)';
                         div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-
-                    }else {
-                        div.style.backgroundColor = 'rgb(80, 85, 84)'
-                        div.style.boxShadow= 'none';
     
                     }
                 }
               )
-            } else {
+            } else if( doneRate < 1 && doneRate >= 2/3  ){
+    
+                console.log(`${neededHabit.habitName} count does 2/3 match.`);
+    
+                let date = habitsDone[0];
+      
+                var divElements = document.querySelectorAll('.sheetBox');
+      
+                divElements.forEach(function(div) {
+                      let dataName = div.getAttribute('data-name');
+                      let dataDate = parseInt(div.getAttribute('data-date'));
+      
+                      if (dataName === neededHabit.habitName && dataDate === date) {
+                          div.setAttribute('data-statu','2/3Done');  
+                      }
+                      if(div.getAttribute('data-statu') === '2/3Done') {
+                          console.log('2/3 color 4')
+                          div.style.backgroundColor = '#26a641';
+                          div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+    
+                      }  
+                  }
+                )
+            } else if( doneRate < 2/3 && doneRate >= 1/3  ){
+    
+                console.log(`${neededHabit.habitName} count does 1/3 match.`);
+    
+                let date = habitsDone[0];
+      
+                var divElements = document.querySelectorAll('.sheetBox');
+      
+                divElements.forEach(function(div) {
+                      let dataName = div.getAttribute('data-name');
+                      let dataDate = parseInt(div.getAttribute('data-date'));
+      
+                      if (dataName === neededHabit.habitName && dataDate === date) {
+                          div.setAttribute('data-statu','1/3Done');  
+                      }
+                      if(div.getAttribute('data-statu') === '1/3Done') {
+                          div.style.backgroundColor = '#006d32';
+                          div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+                      }  
+                  }
+                )
+            } else if( doneRate < 1/3 && doneRate > 0  ){
+    
+                console.log(`${neededHabit.habitName} count does not match.`);
+    
+                let date = habitsDone[0];
+      
+                var divElements = document.querySelectorAll('.sheetBox');
+      
+                divElements.forEach(function(div) {
+                      let dataName = div.getAttribute('data-name');
+                      let dataDate = parseInt(div.getAttribute('data-date'));
+      
+                      if (dataName === neededHabit.habitName && dataDate === date) {
+                          div.setAttribute('data-statu','1/3Done');  
+                      }
+                      if(div.getAttribute('data-statu') === '1/3Done') {
+                          div.style.backgroundColor = '#0e4429';
+                          div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+    
+                      }  
+                  }
+                )
+            }else if(!doneCount){
               console.log(`${neededHabit.habitName} count does not match.`);
     
               let date = habitsDone[0];
@@ -862,22 +1100,13 @@ function checkBtn(button) {
     
                     if (dataName === neededHabit.habitName && dataDate === date) {
                         div.setAttribute('data-statu','NotDone');  
-                    }
-                    if(div.getAttribute('data-statu') === 'Done') {
-                        div.style.backgroundColor = 'rgb(110, 187, 62)';
-                        div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-
-                    }else {
-                        div.style.backgroundColor = 'rgb(80, 85, 84)'
-                        div.style.boxShadow= 'none';
-                    }
-    
-                    
+                    } 
                 }
               )
     
             }
         });
+    
         
         
         historyHTML = document.querySelector('.history-page').innerHTML;
@@ -917,11 +1146,20 @@ function checkBtn(button) {
             map[habit.doneHabitName] = habit.doneHabitCount;
             return map;
         }, {});
+
         neededHabits = Array.from(uniqueHabits.values());
-          
-        // Iterate through the neededHabits array and compare the counts
+
+        console.log(neededHabits)
+
         neededHabits.forEach((neededHabit) => {
-            const doneCount = doneHabitsMap[neededHabit.habitName];
+
+            let doneCount = parseInt(doneHabitsMap[neededHabit.habitName]) ;
+    
+            if(!doneCount) {
+                doneCount = 0;
+            }
+            let doneRate = doneCount/neededHabit.neededHabit
+    
             if (doneCount === neededHabit.neededHabit) {
               console.log(`${neededHabit.habitName} has the same count: ${doneCount}`);
     
@@ -939,15 +1177,77 @@ function checkBtn(button) {
                     if(div.getAttribute('data-statu') === 'Done') {
                         div.style.backgroundColor = 'rgb(110, 187, 62)';
                         div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-
-                    }else {
-                        div.style.backgroundColor = 'rgb(80, 85, 84)'
-                        div.style.boxShadow= 'none';
     
                     }
                 }
               )
-            } else {
+            } else if( doneRate < 1 && doneRate >= 2/3  ){
+    
+                console.log(`${neededHabit.habitName} count does 2/3 match.`);
+    
+                let date = habitsDone[0];
+      
+                var divElements = document.querySelectorAll('.sheetBox');
+      
+                divElements.forEach(function(div) {
+                      let dataName = div.getAttribute('data-name');
+                      let dataDate = parseInt(div.getAttribute('data-date'));
+      
+                      if (dataName === neededHabit.habitName && dataDate === date) {
+                          div.setAttribute('data-statu','2/3Done');  
+                      }
+                      if(div.getAttribute('data-statu') === '2/3Done') {
+                          console.log('2/3 color 4')
+                          div.style.backgroundColor = '#26a641';
+                          div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+    
+                      }  
+                  }
+                )
+            } else if( doneRate < 2/3 && doneRate >= 1/3  ){
+    
+                console.log(`${neededHabit.habitName} count does 1/3 match.`);
+    
+                let date = habitsDone[0];
+      
+                var divElements = document.querySelectorAll('.sheetBox');
+      
+                divElements.forEach(function(div) {
+                      let dataName = div.getAttribute('data-name');
+                      let dataDate = parseInt(div.getAttribute('data-date'));
+      
+                      if (dataName === neededHabit.habitName && dataDate === date) {
+                          div.setAttribute('data-statu','1/3Done');  
+                      }
+                      if(div.getAttribute('data-statu') === '1/3Done') {
+                          div.style.backgroundColor = '#006d32';
+                          div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+                      }  
+                  }
+                )
+            } else if( doneRate < 1/3 && doneRate > 0  ){
+    
+                console.log(`${neededHabit.habitName} count does not match.`);
+    
+                let date = habitsDone[0];
+      
+                var divElements = document.querySelectorAll('.sheetBox');
+      
+                divElements.forEach(function(div) {
+                      let dataName = div.getAttribute('data-name');
+                      let dataDate = parseInt(div.getAttribute('data-date'));
+      
+                      if (dataName === neededHabit.habitName && dataDate === date) {
+                          div.setAttribute('data-statu','1/3Done');  
+                      }
+                      if(div.getAttribute('data-statu') === '1/3Done') {
+                          div.style.backgroundColor = '#0e4429';
+                          div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+    
+                      }  
+                  }
+                )
+            }else if(!doneCount){
               console.log(`${neededHabit.habitName} count does not match.`);
     
               let date = habitsDone[0];
@@ -960,22 +1260,13 @@ function checkBtn(button) {
     
                     if (dataName === neededHabit.habitName && dataDate === date) {
                         div.setAttribute('data-statu','NotDone');  
-                    }
-                    if(div.getAttribute('data-statu') === 'Done') {
-                        div.style.backgroundColor = 'rgb(110, 187, 62)';
-                        div.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-
-                    }else {
-                        div.style.backgroundColor = 'rgb(80, 85, 84)'
-                        div.style.boxShadow= 'none';
-                    }
-    
-                    
+                    } 
                 }
               )
     
             }
         });
+    
 
         daysChecker()
         
