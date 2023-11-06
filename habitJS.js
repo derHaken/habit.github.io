@@ -1,4 +1,4 @@
-localStorage.clear()
+// localStorage.clear()
 
 let currentDate = new Date()
 currentDate = currentDate.setHours(0, 0, 0, 0) + 0*(86400000)
