@@ -1068,10 +1068,10 @@ addBtn.addEventListener("click", e => {
     let title = titleTag.value.trim(),
     description = descTag.value.trim();
     if(title || description) {
-        let currentDate = new Date(),
-        month = months[currentDate.getMonth()],
-        day = currentDate.getDate(),
-        year = currentDate.getFullYear();
+        let currentDate2 = new Date(),
+        month = months[currentDate2.getMonth()],
+        day = currentDate2.getDate(),
+        year = currentDate2.getFullYear();
         let noteInfo = {title, description, date: `${month} ${day}, ${year}`}
         if(!isUpdate) {
             notes.push(noteInfo);
