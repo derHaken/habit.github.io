@@ -26,42 +26,42 @@ function daysChecker(){
 
     if(document.querySelector(".habitSheets").querySelectorAll(".sheetBox")) {
 
-        document.querySelector(".habitSheets").querySelectorAll(".sheetBox").forEach(sheetBox => {
+        // document.querySelector(".habitSheets").querySelectorAll(".sheetBox").forEach(sheetBox => {
 
     
-            let boxDate = sheetBox.getAttribute('data-date')
+        //     let boxDate = sheetBox.getAttribute('data-date')
 
-            let parentElement = sheetBox.parentNode;
+        //     let parentElement = sheetBox.parentNode;
 
             
 
-            if((parseInt(boxDate) === currentDate) && (window.getComputedStyle(parentElement).getPropertyValue('display') === 'flex')){
+        //     if((parseInt(boxDate) === currentDate) && (window.getComputedStyle(parentElement).getPropertyValue('display') === 'flex')){
                 
-                status.push(sheetBox.getAttribute('data-statu'))
+        //         status.push(sheetBox.getAttribute('data-statu'))
 
-                console.log(status)
+        //         console.log(status)
             
-                if(status.includes('NotDone') || status.length === 0){
+        //         if(status.includes('NotDone') || status.length === 0){
 
-                    console.log("gri")
+        //             console.log("gri")
 
-                    let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
-                    box.setAttribute('data-statu', 'NotDone')
-                    box.style.backgroundColor = 'rgb(80, 85, 84)'
-                    box.style.boxShadow= 'none'
+        //             let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+        //             box.setAttribute('data-statu', 'NotDone')
+        //             box.style.backgroundColor = 'rgb(80, 85, 84)'
+        //             box.style.boxShadow= 'none'
 
-                }else{
+        //         }else{
 
-                    console.log('yeş')
-                    let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
-                    box.setAttribute('data-statu', 'Done')
-                    box.style.backgroundColor = 'rgb(110, 187, 62)';
-                    box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
-                }
-            }
+        //             console.log('yeş')
+        //             let box = document.querySelector('[data-name="30daysSheet"][data-date="' + currentDate + '"]');
+        //             box.setAttribute('data-statu', 'Done')
+        //             box.style.backgroundColor = 'rgb(110, 187, 62)';
+        //             box.style.boxShadow = 'inset 0 0 0 3px rgb(71, 163, 14)';
+        //         }
+        //     }
     
 
-        })
+        // })
 
         let neededCount = 0;
 
@@ -340,7 +340,9 @@ function swipeChange(){
                             let dataDate = parseInt(div.getAttribute('data-date'));
             
                             if (dataName === neededHabit.habitName && dataDate === date) {
-                                div.setAttribute('data-statu','NotDone');  
+                                div.setAttribute('data-statu','NotDone'); 
+                                div.style.backgroundColor = 'rgb(80, 85, 84)'
+                                div.style.boxShadow= 'none'
                             } 
                         }
                       )
@@ -934,7 +936,9 @@ habitData.addEventListener('submit', function add(e) {
                 let dataDate = parseInt(div.getAttribute('data-date'));
 
                 if (dataName === neededHabit.habitName && dataDate === date) {
-                    div.setAttribute('data-statu','NotDone');  
+                    div.setAttribute('data-statu','NotDone'); 
+                    div.style.backgroundColor = 'rgb(80, 85, 84)'
+                    div.style.boxShadow= 'none' 
                 } 
             }
           )
@@ -1099,7 +1103,9 @@ function checkBtn(button) {
                     let dataDate = parseInt(div.getAttribute('data-date'));
     
                     if (dataName === neededHabit.habitName && dataDate === date) {
-                        div.setAttribute('data-statu','NotDone');  
+                        div.setAttribute('data-statu','NotDone');
+                        div.style.backgroundColor = 'rgb(80, 85, 84)'
+                        div.style.boxShadow= 'none'  
                     } 
                 }
               )
@@ -1260,6 +1266,8 @@ function checkBtn(button) {
     
                     if (dataName === neededHabit.habitName && dataDate === date) {
                         div.setAttribute('data-statu','NotDone');  
+                        div.style.backgroundColor = 'rgb(80, 85, 84)'
+                        div.style.boxShadow= 'none'
                     } 
                 }
               )
