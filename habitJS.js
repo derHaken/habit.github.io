@@ -10,6 +10,9 @@ let changeHTML;
 let habitProgram = [];
 let habitsDone =[currentDate]; 
 localStorage.setItem("SavedHabitsDone", JSON.stringify(habitsDone));
+if(currentDate != habitsDone[0]){
+    localStorage.setItem("SavedHabitsDone", JSON.stringify(habitsDone));
+}
 let neededHabits = [];
 let habitNames = [];
 const storedNeededHabits  = localStorage.getItem("SavedNeededHabits");
