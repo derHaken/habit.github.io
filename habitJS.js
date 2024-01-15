@@ -9,7 +9,6 @@ let habitProgramHTML = document.querySelector('.habitProgram-HTML').innerHTML;
 let changeHTML;
 let habitProgram = [];
 let habitsDone =[currentDate]; 
-localStorage.setItem("SavedHabitsDone", JSON.stringify(habitsDone));
 if(currentDate != habitsDone[0]){
     localStorage.setItem("SavedHabitsDone", JSON.stringify(habitsDone));
 }
